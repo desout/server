@@ -1,7 +1,14 @@
 import * as express from 'express';
 import {checkTokenUser} from '../../verification/checkTokenUser';
 import {checkToken} from '../../verification/checkToken';
-import {addClientFn, deleteClientFn, editClientFn, getClientFn, getClientsFn} from './clients.worker';
+import {
+    addClientFn,
+    deleteClientFn,
+    editClientFn,
+    getClientByNameFn,
+    getClientFn,
+    getClientsFn
+} from './clients.worker';
 
 export const clientsRouter = express.Router();
 
@@ -9,6 +16,7 @@ export const clientsRouter = express.Router();
 clientsRouter.get('/', checkToken, getClientsFn);
 clientsRouter.get('/:id', checkTokenUser, getClientFn);
 clientsRouter.put('/:id', checkToken, addClientFn);
+clientsRouter.get('/name/:name', checkTokenUser, getClientByNameFn);
 clientsRouter.delete('/:id', checkToken, deleteClientFn);
 clientsRouter.post('/:id', checkTokenUser, editClientFn);
 
