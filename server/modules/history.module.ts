@@ -1,6 +1,6 @@
-import {db} from "../../app";
-import {DeliveryHistoryItem} from "../models/DeliveryHistoryItem";
-import {responseType} from "../models/responseType";
+import {db} from '../../app';
+import {DeliveryHistoryItem} from '../models/DeliveryHistoryItem';
+import {responseType} from '../models/responseType';
 
 export const getHistory = (): Promise<DeliveryHistoryItem[]> => db.query(`SELECT DeliveryHistory.count,
     DeliveryHistory.cost,
@@ -18,7 +18,9 @@ export const getHistoryByProvider = (id: number): Promise<DeliveryHistoryItem> =
 FROM db.DeliveryHistory WHERE Providers_idProvider = ${id}`);
 
 
-export const addHistoryElement = (item: DeliveryHistoryItem): Promise<responseType> => db.query(`INSERT INTO db.DeliveryHistory
+export const addHistoryElement = (item: DeliveryHistoryItem): Promise<responseType> => {
+    console.log(item);
+    return db.query(`INSERT INTO db.DeliveryHistory
 (count,
 cost,
 date,
@@ -26,6 +28,7 @@ Providers_idProvider,
 Ingredients_idIngredient)
 VALUES
 (?);`, prepareHistoryItem(item));
+};
 
 export const updateHistoryElement = (item: DeliveryHistoryItem): Promise<responseType> => db.query(`UPDATE db.DeliveryHistory
 SET

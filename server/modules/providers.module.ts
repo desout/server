@@ -1,6 +1,6 @@
 import {db} from '../../app';
-import {Provider} from "../models/Provider";
-import {responseType} from "../models/responseType";
+import {Provider} from '../models/Provider';
+import {responseType} from '../models/responseType';
 
 export const getProviders = (): Promise<Provider[]> => db.query(`SELECT Providers.idProvider,
     Providers.contractInfo
@@ -17,10 +17,10 @@ export const addProvider = (provider: Provider): Promise<responseType> => db.que
 VALUES
 (?);`, prepareProvider(provider));
 
-export const updateProvider = (provider: Provider): Promise<responseType> => db.query('UPDATE Clients' +
+export const updateProvider = (provider: Provider): Promise<responseType> => db.query('UPDATE db.Providers' +
     ' SET' +
     ' contractInfo = ?' +
-    ' WHERE idProvider = ' + provider.idProvider + ';', prepareProvider(provider)[0]);
+    ' WHERE Providers_idProvider = ' + provider.idProvider + ';', prepareProvider(provider)[0]);
 
 const prepareProvider = (provider: Provider) =>
     [[

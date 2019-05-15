@@ -1,8 +1,8 @@
 import {db} from '../../app';
-import {Order} from "../models/Order";
-import {addDishByOrder} from "./dishes.module";
-import {Dish} from "../models/Dish";
-import {responseType} from "../models/responseType";
+import {Order} from '../models/Order';
+import {addDishByOrder} from './dishes.module';
+import {Dish} from '../models/Dish';
+import {responseType} from '../models/responseType';
 
 export const getOrders = (): Promise<Order[]> => db.query('SELECT * FROM Orders');
 
@@ -37,7 +37,7 @@ WHERE idOrder = ${order.idOrder};`, prepareOrder(order)[0]);
 export const getOrderDishes = (id: number): Promise<Dish[]> => db.query(`SELECT
     Dishes.idDish,
     Dishes.name,
-    Dishes.photo,
+    Dishes.idPhoto,
     Dishes.description,
     Dishes.prepareTime,
     Dishes.Categories_idCategory
