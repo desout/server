@@ -9,7 +9,7 @@ export const checkToken = (req: Request, res: Response, next: any) => {
 
         verify(authorization, SECRET_TOKEN, undefined, (err: VerifyErrors, decoded: any) => {
             if (err) {
-                return res.sendStatus(400).clearCookie('authorization').json({
+                return res.status(400).clearCookie('authorization').send({
                     success: false,
                     message: 'Token is not valid'
                 });
@@ -18,7 +18,7 @@ export const checkToken = (req: Request, res: Response, next: any) => {
                     next();
                     return res;
                 } else {
-                    return res.sendStatus(400).clearCookie('authorization').json({
+                    return res.status(400).clearCookie('authorization').send({
                         success: false,
                         message: 'Token is not valid'
                     });
@@ -26,7 +26,7 @@ export const checkToken = (req: Request, res: Response, next: any) => {
             }
         });
     } else {
-        return res.sendStatus(400).clearCookie('authorization').json({
+        return res.status(400).clearCookie('authorization').send({
             success: false,
             message: 'auth token is not supplied'
         });
