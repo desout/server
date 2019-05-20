@@ -14,7 +14,7 @@ export const checkTokenUser = (req: Request, res: Response, next: any) => {
                     message: 'Token is not valid'
                 });
             } else {
-                if ((<any>decoded)['role'] === 'CLIENT') {
+                if ((<any>decoded)['role']) {
                     next();
                     return res;
                 } else {

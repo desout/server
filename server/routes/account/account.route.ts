@@ -16,4 +16,4 @@ accountRouter.post('/login', loginUserFn);
 accountRouter.post('/logout', logoutUserFn);
 accountRouter.post('/auth', checkTokenAuth);
 accountRouter.post('/updatePassword', updatePasswordFn);
-accountRouter.get('/currentUser', (req, res) => getCurrentUserFn(req, res));
+accountRouter.get('/currentUser', getCurrentUserFn);

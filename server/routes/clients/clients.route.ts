@@ -15,7 +15,7 @@ export const clientsRouter = express.Router();
 // CLIENTS PART
 clientsRouter.get('/', checkToken, getClientsFn);
 clientsRouter.get('/:id', checkTokenUser, getClientFn);
-clientsRouter.put('/:id', checkToken, addClientFn);
+clientsRouter.put('/', checkToken, addClientFn);
 clientsRouter.get('/name/:name', checkTokenUser, getClientByNameFn);
 clientsRouter.delete('/:id', checkToken, deleteClientFn);
 clientsRouter.post('/:id', checkTokenUser, editClientFn);

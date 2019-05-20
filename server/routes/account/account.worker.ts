@@ -18,7 +18,6 @@ export function checkTokenAuth(req: Request, res: Response) {
     const {authorization} = req.cookies;
 
     if (authorization) {
-
         verify(authorization, SECRET_TOKEN, undefined, (err: VerifyErrors, decoded: string | object) => {
             if (err) {
                 return res.json({
@@ -74,7 +73,6 @@ export function loginUserFn(req: Request, res: Response) {
     if (username) {
         if (!isEmployee) {
             checkUserPassword({login: username, password: password}).then(response => {
-                console.log(response);
                 if (response.isValid) {
                     const token = sign({username: username, role: 'CLIENT'},
                         SECRET_TOKEN,
@@ -143,7 +141,7 @@ export function updatePasswordFn(req: Request, res: Response): void {
     } else {
         isComplete = updatePasswordEmployee(user);
     }
-    isComplete.then(response => response === -1 ? res.status(200).send(response) : res.status(301));
+    isComplete.then(response => response === -1 ? res.status(200).send({id: response}) : res.status(301));
 }
 
 export function getCurrentUserFn(req: Request, res: Response): void {
