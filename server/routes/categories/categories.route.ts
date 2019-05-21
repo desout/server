@@ -15,7 +15,7 @@ export const categoriesRouter = express.Router();
 categoriesRouter.get('/', getCategoriesFn);
 categoriesRouter.get('/:id', getCategoryFn);
 categoriesRouter.get('/:id/dishes', getCategoryDishesFn);
-categoriesRouter.put('/:id', checkToken, addCategoryFn);
+categoriesRouter.put('/', checkToken, addCategoryFn);
 categoriesRouter.delete('/:id', checkToken, deleteCategoryFn);
 categoriesRouter.post('/:id', checkToken, editCategoryFn);
 

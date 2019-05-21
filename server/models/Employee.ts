@@ -10,5 +10,5 @@ export interface Employee {
     role: string;
     salary: number;
     contacts?: string;
-    idDepartment: number;
+    Departments_idDepartment: number;
 }

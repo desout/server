@@ -8,7 +8,7 @@ export const dishesRouter = express.Router();
 dishesRouter.get('/',  getDishesFn);
 dishesRouter.get('/:id', getDishFn);
 dishesRouter.get('/:id/ingredients', getDishIngredientsFn);
-dishesRouter.put('/:id', checkToken, addDishFn);
+dishesRouter.put('/', checkToken, addDishFn);
 dishesRouter.delete('/:id', checkToken, deleteDishFn);
 dishesRouter.post('/:id', checkToken, editDishFn);
 

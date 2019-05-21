@@ -62,7 +62,7 @@ function getExportEmployee(employee: Employee) {
         role: employee.role,
         salary: employee.salary,
         contacts: employee.contacts,
-        idDepartment: employee.idDepartment
+        Departments_idDepartment: employee.Departments_idDepartment
     };
 }
 

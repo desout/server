@@ -103,7 +103,7 @@ const prepareEmployeeUpdate = (employee: Employee) =>
         employee.role,
         employee.salary,
         employee.contacts,
-        employee.idDepartment
+        employee.Departments_idDepartment
     ]];
 
 const prepareEmployee = (employee: Employee) =>
@@ -118,7 +118,7 @@ const prepareEmployee = (employee: Employee) =>
         employee.role,
         employee.salary,
         employee.contacts,
-        employee.idDepartment
+        employee.Departments_idDepartment
     ]];
 
 export const checkEmployeePassword = (employee: { login: string, password: string }): Promise<{ employee: Employee, isValid: boolean }> =>

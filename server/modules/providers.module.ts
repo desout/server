@@ -20,7 +20,7 @@ VALUES
 export const updateProvider = (provider: Provider): Promise<responseType> => db.query('UPDATE db.Providers' +
     ' SET' +
     ' contractInfo = ?' +
-    ' WHERE Providers_idProvider = ' + provider.idProvider + ';', prepareProvider(provider)[0]);
+    ' WHERE idProvider = ' + provider.idProvider + ';', prepareProvider(provider)[0]);
 
 const prepareProvider = (provider: Provider) =>
     [[
