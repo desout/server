@@ -1,14 +1,15 @@
-import {Category} from '../models/Category';
-import {addCategory, deleteCategory, getCategories, getCategory, updateCategory} from '../modules/categories.module';
 import * as chaiAsPromised from 'chai-as-promised';
 import * as chai from 'chai';
 import * as Sinon from 'sinon';
 import {db} from '../../app';
+import { deleteClient, getClient, getClientByName, getClients, updateClient } from '../modules/clients.module';
+import { Client } from '../models/Client';
 
 chai.use(chaiAsPromised);
 chai.should();
-describe('Categories module', function () {
+describe('Clients module', function () {
     let stub;
+    const results: Client[] = [{idClient: 0, name: 'name', contacts: 'contacts', discount: 10, password: 'password'}];
     beforeEach(function() {
         stub = Sinon.stub(db, 'query');
     });
@@ -16,43 +17,55 @@ describe('Categories module', function () {
     afterEach(() => {
         stub.restore();
     });
-    it('getCategories should return correct data', function () {
-        const name = 'john doe';
-        const results: Category[] = [{idCategory: 0, name: name, idPhoto: '1', description: 'descr'}];
-        stub.withArgs('SELECT * FROM Categories').returns(Promise.resolve(results));
-        return getCategories().should.eventually.become(results);
+    it('getClients should return correct data', function () {
+        stub.withArgs(`SELECT
+    Clients.idClient,
+    Clients.name,
+    Clients.password,
+    Clients.contacts,
+    Clients.discount
+FROM
+    Clients;`).returns(Promise.resolve(results));
+        return getClients().should.eventually.become(results);
     });
-    it('getCategory should return correct data', function () {
-        const name = 'john doe';
-        const results: Category[] = [{idCategory: 0, name: name, idPhoto: '1', description: 'descr'}];
-        stub.withArgs('SELECT * FROM Categories WHERE idCategory = 0').returns(Promise.resolve(results));
-        return getCategory(0).should.eventually.become(results);
+    it('getClient should return correct data', function () {
+        stub.withArgs(`SELECT
+    Clients.idClient,
+    Clients.name,
+    Clients.password,
+    Clients.contacts,
+    Clients.discount
+FROM
+    Clients WHERE idClient = 0;`).returns(Promise.resolve(results));
+        return getClient(0).should.eventually.become(results);
     });
-    it('deleteCategory should return correct data', function () {
-        const name = 'john doe';
-        const results: Category[] = [{idCategory: 0, name: name, idPhoto: '1', description: 'descr'}];
-        stub.withArgs('DELETE FROM Categories WHERE idCategory = 0').returns(Promise.resolve(results));
-        return deleteCategory(0).should.eventually.become(results);
+    it('deleteClient should return correct data', function () {
+        stub.withArgs('DELETE FROM Clients WHERE idClient = 0').returns(Promise.resolve(results));
+        return deleteClient(0).should.eventually.become(results);
     });
-    it('addCategory should return correct data', function () {
-        const name = 'john doe';
-        const results: Category[] = [{idCategory: 0, name: name, idPhoto: '1', description: 'descr'}];
-        const args = [results[0].name, results[0].idPhoto, results[0].description];
-        stub.withArgs('INSERT INTO Categories (`name`,' +
-            ' `idPhoto`,' +
-            ' `description`) VALUES (?)', [args]).returns(Promise.resolve(results[0].idCategory));
-        return addCategory(results[0]).should.eventually.become(results[0].idCategory);
+    it('getClientByName should return correct data', function () {
+        const args = results[0].name;
+        stub.withArgs(`SELECT
+    Clients.idClient,
+    Clients.name,
+    Clients.password,
+    Clients.contacts,
+    Clients.discount
+FROM
+    Clients WHERE name = ?`, args).returns(Promise.resolve(results));
+        return getClientByName(results[0].name).should.eventually.become(results);
     });
-    it('updateCategory should return correct data', function () {
-        const name = 'john doe';
-        const results: Category[] = [{idCategory: 0, name: name, idPhoto: '1', description: 'descr'}];
-        const args = [results[0].name, results[0].idPhoto, results[0].description];
-        stub.withArgs('UPDATE Categories' +
-            ' SET' +
-            ' `name` = ?,' +
-            ' `idPhoto` = ?,' +
-            ' `description` = ? ' +
-            'WHERE `idCategory` = ' + results[0].idCategory + ';', args).returns(Promise.resolve(results[0].idCategory));
-        return updateCategory(results[0]).should.eventually.become(results[0].idCategory);
+
+    it('updateClient without password should call correct sql', function () {
+        const client = {...results[0]};
+        delete client.password;
+        const args = [results[0].name, results[0].contacts, results[0].discount];
+        stub.withArgs('UPDATE Clients' +
+          ' SET' +
+          ' name = ?,' +
+          ' contacts = ?,' +
+          ' discount = ? ' +
+          'WHERE idClient =' + results[0].idClient + ';', args).returns(Promise.resolve(results[0].idClient));
+        return updateClient(client).should.eventually.become(results[0].idClient);
     });
 });
