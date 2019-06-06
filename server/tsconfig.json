@@ -19,6 +19,7 @@
     "moduleResolution": "node"
   },
   "exclude": [
-    "../../client"
+    "../../client",
+    "__tests__"
   ]
 }
